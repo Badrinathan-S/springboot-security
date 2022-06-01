@@ -1,4 +1,4 @@
-package com.springboot.app.authority;
+package com.springboot.app.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

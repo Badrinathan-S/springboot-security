@@ -1,5 +1,6 @@
 package com.springboot.app.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -9,16 +10,24 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.springboot.app.service.CustomerUserService;
+
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
+	@Autowired
+	private CustomerUserService userService;
+	
+	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		// TODO Auto-generated method stub
 		auth.inMemoryAuthentication().withUser("badri").password(passwordEncoder().encode("badri")).authorities("USER", "ADMIN");
 		
+		//Database
+		auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
 	}
 
 	@Bean
@@ -39,7 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		
 		http.formLogin();
 		
-		http.httpBasic();
+		http.csrf().disable().headers().frameOptions(null).disable();
 		
 	}
 
