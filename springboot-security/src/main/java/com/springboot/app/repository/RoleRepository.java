@@ -3,10 +3,11 @@ package com.springboot.app.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.springboot.app.entities.User;
+import com.springboot.app.entities.Role;
 
-@Repository
-public interface UserRepository extends JpaRepository<User, Long> {
+//@Repository
+public interface RoleRepository extends  JpaRepository<Role, Integer> {
 	
 	
+
 }
