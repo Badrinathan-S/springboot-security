@@ -1,6 +1,7 @@
 package com.springboot.app.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,7 +12,7 @@ import com.springboot.app.entities.User;
 import com.springboot.app.repository.UserRepository;
 
 @RestController
-@RequestMapping("/secure/test")
+@RequestMapping("/secure/rest")
 public class AdminController {
 	
 	@Autowired
@@ -20,7 +21,7 @@ public class AdminController {
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 	
-	
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@PostMapping("/admin/add")
 	public String addUserByAdmin(@RequestBody User user) {
 		
