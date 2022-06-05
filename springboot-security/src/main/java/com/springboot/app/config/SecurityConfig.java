@@ -1,5 +1,6 @@
 package com.springboot.app.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -16,6 +17,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+	@Autowired
 	private UserDetailsService userDetailsService;
 
 	@Override
@@ -26,14 +28,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable();
-		http.authorizeRequests().antMatchers("/rest/**").authenticated().anyRequest().permitAll().and()
-				.authorizeRequests().antMatchers("/secure/**").authenticated().anyRequest().hasAnyRole("ADMIN").and()
-				.formLogin().permitAll();
+		http.authorizeRequests().antMatchers("/rest/**").permitAll().and().authorizeRequests().antMatchers("/secure/**")
+				.hasAnyRole("ADMIN").anyRequest().authenticated().and().formLogin().permitAll();
 	}
 
 	@Bean
 	public BCryptPasswordEncoder encodePassword() {
-
 		return new BCryptPasswordEncoder();
 	}
 

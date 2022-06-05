@@ -10,7 +10,7 @@ import com.springboot.app.entities.User;
 import com.springboot.app.repository.UserRepository;
 
 @Service
-public class CustomerUserDetailsService implements UserDetailsService {
+public class CustomUserDetailsService implements UserDetailsService {
 
 	@Autowired
 	private UserRepository repository;
@@ -18,10 +18,10 @@ public class CustomerUserDetailsService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		User user = repository.findByUsername(username);
-		CustomerUserDetails userDetails = null;
+		CustomUserDetails userDetails = null;
 
 		if (user != null) {
-			userDetails = new CustomerUserDetails();
+			userDetails = new CustomUserDetails();
 			userDetails.setUser(user);
 		} else {
 			throw new UsernameNotFoundException("User not exist with name:" + username);

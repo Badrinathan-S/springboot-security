@@ -14,14 +14,15 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CustomerUserDetails implements UserDetails {
+public class CustomUserDetails implements UserDetails {
 
+	private static final long serialVersionUID = 202206050820L;
 	private User user;
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		user.getRoles().stream().map(role -> new SimpleGrantedAuthority("ROLE_" + role)).collect(Collectors.toList());
-		return null;
+		return user.getRoles().stream().map(role -> new SimpleGrantedAuthority("ROLE_" + role))
+				.collect(Collectors.toList());
 	}
 
 	@Override

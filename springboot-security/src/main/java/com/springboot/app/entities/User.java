@@ -31,7 +31,7 @@ public class User {
 	private Long user_id;
 	private String firstName;
 	private String lastName;
-	private String Username;
+	private String username;
 	private String email;
 	private String password;
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
